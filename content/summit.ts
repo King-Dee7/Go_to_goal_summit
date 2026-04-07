@@ -2,7 +2,7 @@ export const summitContent = {
   hero: {
     cyclingVerbs: ["dream", "build", "lead", "start", "rise", "create"],
     eventName: "Go To Goal Summit",
-    tagline: "Are we bold enough to",
+    tagline: "Are We Bold Enough to",
     date: "23RD MAY 2026",
     location: "Accra, Ghana",
     primaryCta: "Claim Your Seat",

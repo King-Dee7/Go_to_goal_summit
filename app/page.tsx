@@ -9,7 +9,50 @@ export default function Home() {
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(-1);
+  const [speakerIndex, setSpeakerIndex] = useState(1);
   const verbRef = useRef<HTMLSpanElement>(null);
+  const speakerCards = [
+    {
+      image: "/summit-speaker.png",
+      alt: "Summit speaker profile",
+      name: "Speaker Announcement",
+      role: "Industry Leader & Executive",
+    },
+    {
+      image: "/summit-networking.png",
+      alt: "Featured summit speaker",
+      name: "Featured Speaker",
+      role: "Founder, Creator, Mentor",
+    },
+    {
+      image: "/summit-audience.png",
+      alt: "Summit contributor profile",
+      name: "Speaker Announcement",
+      role: "Creative & Cultural Architect",
+    },
+    {
+      image: "/summit-stage.png",
+      alt: "Speaker delivering session on stage",
+      name: "Speaker Announcement",
+      role: "Policy & Ecosystem Builder",
+    },
+    {
+      image: "/summit-speaker.png",
+      alt: "Summit keynote speaker portrait",
+      name: "Speaker Announcement",
+      role: "Entrepreneur & Founder",
+    },
+    {
+      image: "/summit-networking.png",
+      alt: "Summit contributor in audience conversation",
+      name: "Speaker Announcement",
+      role: "Creative Director & Strategist",
+    },
+  ];
+  const speakerCount = speakerCards.length;
+  const leftSpeaker = speakerCards[(speakerIndex - 1 + speakerCount) % speakerCount];
+  const centerSpeaker = speakerCards[speakerIndex];
+  const rightSpeaker = speakerCards[(speakerIndex + 1) % speakerCount];
   
   useEffect(() => {
     // Hero verb cycling logic
@@ -64,6 +107,14 @@ export default function Home() {
   
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? -1 : index);
+  };
+
+  const showPreviousSpeaker = () => {
+    setSpeakerIndex((prev) => (prev - 1 + speakerCount) % speakerCount);
+  };
+
+  const showNextSpeaker = () => {
+    setSpeakerIndex((prev) => (prev + 1) % speakerCount);
   };
   
   // We need to inject dynamic attributes back. 
@@ -121,7 +172,7 @@ export default function Home() {
 <section className="about-tedai" id="story">
     <div className="about-tedai-header">
       <p className="about-tedai-lead reveal">
-        Hear the world's most compelling voices to share raw, unfiltered stories that transform aspiration into <span className="about-tedai-italic">action.</span>
+        Hear the world's most compelling voices to share raw, unfiltered stories that transform aspiration into <span className="about-tedai-stamp">action.</span>
       </p>
     </div>
     
@@ -162,9 +213,8 @@ export default function Home() {
 {/*  ========== 03. WHAT YOU'LL EXPERIENCE ==========  */}
 <section className="experience-inbound" id="experience">
   <div className="experience-inbound-header">
-    <div className="experience-inbound-label reveal">The Experience</div>
-    <h2 className="experience-inbound-title reveal">What awaits you</h2>
-    <p className="experience-inbound-sub reveal">Every session is designed to be practical, reflective, and engaging, not theoretical. This is where real growth happens.</p>
+    <h2 className="experience-inbound-title reveal">The Experience</h2>
+    <p className="experience-inbound-sub reveal">No panels that talk at you. No theory without application. Every session puts you in the room with people who&apos;ve actually done it, and challenges you to leave with something you can use.</p>
   </div>
   <div className="experience-inbound-grid">
     <div className="experience-inbound-card reveal">
@@ -173,7 +223,7 @@ export default function Home() {
       </div>
       <div className="experience-inbound-card-body">
         <h3>Hear Real Stories</h3>
-        <p>Unfiltered journeys of failure, growth, and breakthrough from seasoned professionals across industries. These are not rehearsed talks. They are raw, honest accounts of what it actually takes to build something meaningful from the ground up.</p>
+        <p>Unfiltered journeys of failure, growth, and breakthrough from seasoned professionals across industries. No rehearsed talks, just honest accounts of what it takes to build something meaningful.</p>
       </div>
     </div>
     <div className="experience-inbound-card reveal reveal-delay-1">
@@ -182,7 +232,7 @@ export default function Home() {
       </div>
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
-        <p>Connect with mentors, peers, and collaborators through structured networking moments designed to spark real relationships. Walk away with contacts who share your ambition and can open doors you did not know existed.</p>
+        <p>Connect with mentors, peers, and collaborators through structured networking moments designed to spark real relationships. Leave with contacts who share your ambition and can open new doors.</p>
       </div>
     </div>
     <div className="experience-inbound-card reveal reveal-delay-2">
@@ -191,7 +241,7 @@ export default function Home() {
       </div>
       <div className="experience-inbound-card-body">
         <h3>Gain Practical Tools</h3>
-        <p>Learn how speakers achieved goals once considered impossible. Understand the business behind passion and walk away with clear, actionable frameworks, templates, and strategies you can apply the very next day.</p>
+        <p>Learn how speakers achieved goals once considered impossible. Understand the business behind passion and walk away with actionable frameworks and strategies you can apply the next day.</p>
       </div>
     </div>
   </div>
@@ -199,34 +249,68 @@ export default function Home() {
 
 {/*  ========== 04. AGENDA ==========  */}
 <section className="agenda" id="agenda">
-  <div className="container">
-    <div className="agenda-header">
-      <div className="section-label reveal">Program</div>
-      <h2 className="agenda-title reveal">Summit Agenda</h2>
+  <div className="agenda-editorial">
+    <div className="agenda-editorial-header reveal">
+      <h2 className="agenda-editorial-title">
+        <span>Summit</span>
+        <em className="agenda-stamp">program</em>
+      </h2>
     </div>
-    <div className="format-strip reveal">
-      <span className="format-tag">Keynote Addresses</span>
-      <span className="format-tag">Panel Discussions</span>
-      <span className="format-tag">Fireside Conversations</span>
-      <span className="format-tag">Interactive Q&amp;A</span>
-      <span className="format-tag">Networking Moments</span>
+
+    <div className="agenda-filters reveal">
+      <span className="agenda-filter-tag">Keynotes</span>
+      <span className="agenda-filter-tag">Panels</span>
+      <span className="agenda-filter-tag">Fireside conversations</span>
+      <span className="agenda-filter-tag">Interactive Q&amp;A</span>
+      <span className="agenda-filter-tag">Networking</span>
     </div>
-    <div className="agenda-featured reveal">
-      <div>
-        <div className="agenda-featured-label">Featured Panel</div>
-        <h3 className="agenda-featured-title">The Architecture of Ambition: Bridging Vision and Value</h3>
-        <p className="agenda-featured-desc">
-          This panel explores how ambition is not accidental, but designed. It interrogates how ideas are structured, refined, funded, and sustained&mdash;and how individuals can intentionally build careers, businesses, and platforms that create lasting value.
-        </p>
-        <a href="#register" className="btn-secondary" style={{"display":"inline-flex","padding":"12px 28px","fontSize":"14px"}}>Reserve Your Seat &rarr;</a>
-      </div>
-      <div className="agenda-featured-visual">
-        <span>Vision<br />&amp;<br />Value</span>
-      </div>
+
+    <div className="agenda-rows">
+      <article className="agenda-row reveal">
+        <div className="agenda-row-copy">
+          <p className="agenda-row-date">May 23</p>
+          <h3 className="agenda-row-title">Opening Sessions</h3>
+          <p className="agenda-row-blurb">
+            The day starts with bold keynotes and context-setting conversations on ambition, leadership,
+            and the systems behind real progress.
+          </p>
+        </div>
+        <div className="agenda-row-media">
+          <img src="/summit-stage.png" alt="Summit stage during opening session" />
+        </div>
+      </article>
+
+      <article className="agenda-row reveal reveal-delay-1">
+        <div className="agenda-row-copy">
+          <p className="agenda-row-date">May 23</p>
+          <h3 className="agenda-row-title">Panel Discussions</h3>
+          <p className="agenda-row-blurb">
+            Founders, operators, and creatives share practical lessons on building momentum, navigating setbacks,
+            and turning vision into measurable value.
+          </p>
+        </div>
+        <div className="agenda-row-media">
+          <img src="/summit-networking.png" alt="Professionals discussing ideas in a panel environment" />
+        </div>
+      </article>
+
+      <article className="agenda-row reveal reveal-delay-2">
+        <div className="agenda-row-copy">
+          <p className="agenda-row-date">May 23</p>
+          <h3 className="agenda-row-title">Networking &amp; Close</h3>
+          <p className="agenda-row-blurb">
+            Curated networking moments and an intentional close designed to help you leave with clear next steps,
+            stronger relationships, and immediate action points.
+          </p>
+        </div>
+        <div className="agenda-row-media">
+          <img src="/summit-audience.png" alt="Audience networking and engaging at summit close" />
+        </div>
+      </article>
     </div>
-    <div className="agenda-coming reveal">
-      <p>Full agenda and session breakdown coming soon.</p>
-      <a href="#register" className="btn-secondary" style={{"display":"inline-flex","padding":"12px 28px","fontSize":"14px"}}>Get Notified When It's Live &rarr;</a>
+
+    <div className="agenda-cta reveal">
+      <a href="#register" className="btn-primary">Reserve Your Seat &rarr;</a>
     </div>
   </div>
 </section>
@@ -235,83 +319,119 @@ export default function Home() {
 <section className="speakers" id="speakers">
   <div className="container">
     <div className="speakers-header">
-      <div>
-        <div className="section-label reveal">Voices</div>
-        <h2 className="speakers-title reveal">Speakers &amp; Contributors</h2>
-      </div>
-      <a href="#" className="btn-secondary reveal" style={{"display":"inline-flex","padding":"10px 24px","fontSize":"13px"}}>Nominate a Speaker &rarr;</a>
+      <h2 className="speakers-title reveal">Speakers &amp; Contributors</h2>
+      <a href="#" className="btn-secondary speakers-nominate reveal" style={{"display":"inline-flex","padding":"10px 24px","fontSize":"13px"}}>Nominate a Speaker &rarr;</a>
     </div>
-    <div className="speakers-grid">
-      <div className="speaker-card reveal">
-        <div className="speaker-photo"><div className="speaker-photo-placeholder">TBA</div></div>
-        <div className="speaker-info">
-          <div className="speaker-name">Speaker Announcement</div>
-          <div className="speaker-role">Industry Leader &amp; Executive</div>
+    <div className="speakers-carousel reveal">
+      <button className="speaker-arrow speaker-arrow-left" aria-label="Previous speaker" onClick={showPreviousSpeaker}>&larr;</button>
+
+      <div className="speakers-track">
+        <div className="speaker-card speaker-card-side">
+          <div className="speaker-photo">
+            <img src={leftSpeaker.image} alt={leftSpeaker.alt} />
+            <div className="speaker-overlay">
+              <div className="speaker-name">{leftSpeaker.name}</div>
+              <div className="speaker-role">{leftSpeaker.role}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="speaker-card speaker-card-featured">
+          <div className="speaker-photo">
+            <img src={centerSpeaker.image} alt={centerSpeaker.alt} />
+            <div className="speaker-overlay">
+              <div className="speaker-name">{centerSpeaker.name}</div>
+              <div className="speaker-role">{centerSpeaker.role}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="speaker-card speaker-card-side">
+          <div className="speaker-photo">
+            <img src={rightSpeaker.image} alt={rightSpeaker.alt} />
+            <div className="speaker-overlay">
+              <div className="speaker-name">{rightSpeaker.name}</div>
+              <div className="speaker-role">{rightSpeaker.role}</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="speaker-card reveal reveal-delay-1">
-        <div className="speaker-photo"><div className="speaker-photo-placeholder">TBA</div></div>
-        <div className="speaker-info">
-          <div className="speaker-name">Speaker Announcement</div>
-          <div className="speaker-role">Entrepreneur &amp; Founder</div>
-        </div>
-      </div>
-      <div className="speaker-card reveal reveal-delay-2">
-        <div className="speaker-photo"><div className="speaker-photo-placeholder">TBA</div></div>
-        <div className="speaker-info">
-          <div className="speaker-name">Speaker Announcement</div>
-          <div className="speaker-role">Creative &amp; Cultural Architect</div>
-        </div>
-      </div>
-      <div className="speaker-card reveal reveal-delay-3">
-        <div className="speaker-photo"><div className="speaker-photo-placeholder">TBA</div></div>
-        <div className="speaker-info">
-          <div className="speaker-name">Speaker Announcement</div>
-          <div className="speaker-role">Policy &amp; Ecosystem Builder</div>
-        </div>
-      </div>
+
+      <button className="speaker-arrow speaker-arrow-right" aria-label="Next speaker" onClick={showNextSpeaker}>&rarr;</button>
     </div>
     <div className="speaker-cta-row reveal">
-      <p style={{"color":"var(--brand-muted)","fontSize":"14px","marginBottom":"12px"}}>Speaker lineup will be announced soon. Want to be part of it?</p>
-      <a href="mailto:hello@reinventafrica.org" className="btn-secondary" style={{"display":"inline-flex","padding":"12px 28px","fontSize":"14px"}}>Get in Touch &rarr;</a>
+      <p style={{"color":"rgba(255,255,255,0.88)","fontSize":"20px","lineHeight":"1.4","marginBottom":"14px"}}>Speaker lineup will be announced soon. Want to be part of it?</p>
+      <a href="mailto:hello@reinventafrica.org" className="speakers-contact-btn" style={{"display":"inline-flex","padding":"12px 28px","fontSize":"14px"}}>Get in Touch &rarr;</a>
     </div>
   </div>
 </section>
 
 {/*  ========== 06. WHO SHOULD ATTEND ==========  */}
 <section className="audience" id="audience">
-  <div className="container">
-    <div className="audience-header">
-      <div className="section-label reveal">Who It's For</div>
-      <h2 className="audience-title reveal">This summit is for you</h2>
-      <p className="audience-sub reveal">Whether you're just starting out or leading the way, there's a seat with your name on it.</p>
-    </div>
-    <div className="personas-grid">
-      <div className="persona reveal">
-        <div className="persona-title">Students &amp; Graduates</div>
-        <div className="persona-desc">Discover clarity on your direction before the world tells you what to do.</div>
+  <div className="audience-intro container reveal">
+    <h2 className="audience-title">What&apos;s in it for you</h2>
+    <p className="audience-sub">
+      This summit is for everyone shaping the future of Africa&apos;s leadership and innovation landscape.
+      Whether you&apos;re building your first path or scaling your impact, there&apos;s something designed for you.
+    </p>
+  </div>
+
+  <div className="audience-roles">
+    <article className="audience-role-row reveal">
+      <div className="audience-role-left role-students"><span>Students</span></div>
+      <div className="audience-role-right">
+        <p className="audience-role-kicker">Find your direction</p>
+        <p className="audience-role-copy">Discover clarity before the world defines your path for you.</p>
       </div>
-      <div className="persona reveal reveal-delay-1">
-        <div className="persona-title">Young Professionals</div>
-        <div className="persona-desc">Gain the frameworks and networks to accelerate your early career trajectory.</div>
+    </article>
+
+    <article className="audience-role-row reveal reveal-delay-1">
+      <div className="audience-role-left role-professionals"><span>Young professionals</span></div>
+      <div className="audience-role-right">
+        <p className="audience-role-kicker">Accelerate your growth</p>
+        <p className="audience-role-copy">Gain frameworks, mentors, and networks to level up your career faster.</p>
       </div>
-      <div className="persona reveal reveal-delay-2">
-        <div className="persona-title">Entrepreneurs &amp; Founders</div>
-        <div className="persona-desc">Learn how others turned passion into sustainable, scalable businesses.</div>
+    </article>
+
+    <article className="audience-role-row reveal reveal-delay-2">
+      <div className="audience-role-left role-founders"><span>Entrepreneurs</span></div>
+      <div className="audience-role-right">
+        <p className="audience-role-kicker">Build what lasts</p>
+        <p className="audience-role-copy">Learn how founders turned ideas into resilient, scalable businesses.</p>
       </div>
-      <div className="persona reveal reveal-delay-3">
-        <div className="persona-title">Creatives &amp; Cultural Leaders</div>
-        <div className="persona-desc">See how art, culture, and innovation intersect to build platforms of influence.</div>
+    </article>
+
+    <article className="audience-role-row reveal reveal-delay-3">
+      <div className="audience-role-left role-creatives"><span>Creatives</span></div>
+      <div className="audience-role-right">
+        <p className="audience-role-kicker">Turn craft into leverage</p>
+        <p className="audience-role-copy">See how culture, storytelling, and strategy combine to build influence.</p>
       </div>
-      <div className="persona reveal reveal-delay-4">
-        <div className="persona-title">Corporate Professionals</div>
-        <div className="persona-desc">Reconnect with purpose and find new meaning in your career path.</div>
+    </article>
+
+    <article className="audience-role-row reveal reveal-delay-4">
+      <div className="audience-role-left role-corporate"><span>Corporate professionals</span></div>
+      <div className="audience-role-right">
+        <p className="audience-role-kicker">Reconnect with purpose</p>
+        <p className="audience-role-copy">Find new meaning and sharper direction for your next leadership chapter.</p>
       </div>
-      <div className="persona reveal reveal-delay-4">
-        <div className="persona-title">NGO Leaders &amp; Mentors</div>
-        <div className="persona-desc">Redefine what mentorship means and build ecosystems that truly empower.</div>
+    </article>
+
+    <article className="audience-role-row reveal reveal-delay-4">
+      <div className="audience-role-left role-ngo"><span>NGO &amp; community leaders</span></div>
+      <div className="audience-role-right">
+        <p className="audience-role-kicker">Multiply your impact</p>
+        <p className="audience-role-copy">Redefine mentorship and grow ecosystems that truly empower people.</p>
       </div>
-    </div>
+    </article>
+  </div>
+
+  <div className="audience-outro container reveal">
+    <p className="audience-tagline">
+      Different roles,
+      <br />
+      same <span className="audience-tagline-stamp">obsession</span>.
+    </p>
   </div>
 </section>
 
@@ -319,39 +439,27 @@ export default function Home() {
 <section className="sponsors" id="sponsors">
   <div className="container">
     <div className="sponsors-header">
-      <div className="section-label reveal">Partners</div>
-      <h2 className="sponsors-title reveal">Sponsors &amp; Partners</h2>
-      <p className="sponsors-sub reveal">Align your brand with leadership, innovation, and lasting impact across Africa and beyond.</p>
+      <h2 className="sponsors-title reveal">Sponsors</h2>
+      <p className="sponsors-sub reveal">Organizations supporting the movement.</p>
     </div>
-    <div className="sponsor-tiers">
-      <div className="sponsor-tier reveal">
-        <div className="tier-label">Title Sponsors</div>
-        <div className="tier-logos">
-          <div className="logo-placeholder large">Your Logo</div>
-          <div className="logo-placeholder large">Your Logo</div>
-        </div>
-      </div>
-      <div className="sponsor-tier reveal">
-        <div className="tier-label">Category Sponsors</div>
-        <div className="tier-logos">
-          <div className="logo-placeholder">Your Logo</div>
-          <div className="logo-placeholder">Your Logo</div>
-          <div className="logo-placeholder">Your Logo</div>
-        </div>
-      </div>
-      <div className="sponsor-tier reveal">
-        <div className="tier-label">Supporting Partners</div>
-        <div className="tier-logos">
-          <div className="logo-placeholder small">Logo</div>
-          <div className="logo-placeholder small">Logo</div>
-          <div className="logo-placeholder small">Logo</div>
-          <div className="logo-placeholder small">Logo</div>
-        </div>
-      </div>
+
+    <div className="sponsor-logo-grid reveal">
+      <div className="sponsor-logo-item"><img src="/sponsors/pwc.svg" alt="PWC logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/foley.svg" alt="Foley logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/xero.svg" alt="Xero logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/dataiku.svg" alt="Dataiku logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/shack15.svg" alt="Shack15 logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/hpe.svg" alt="HPE logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/udemy.svg" alt="Udemy logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/xai-labs.svg" alt="XAI Labs logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/oracle.svg" alt="Oracle logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/commtel.svg" alt="Commtel logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/vectara.svg" alt="Vectara logo" /></div>
+      <div className="sponsor-logo-item"><img src="/sponsors/fetch-ai.svg" alt="Fetch.ai logo" /></div>
     </div>
+
     <div className="sponsor-cta reveal">
-      <p>Interested in partnering with FROM GO TO GOAL?</p>
-      <a href="mailto:partnerships@reinventafrica.org" className="btn-primary" style={{"display":"inline-flex"}}>Become a Sponsor &rarr;</a>
+      <a href="mailto:partnerships@reinventafrica.org" className="sponsor-cta-btn">Become a Sponsor</a>
     </div>
   </div>
 </section>
@@ -458,14 +566,20 @@ export default function Home() {
     <div className="reveal">
       <a href="#" className="btn-primary" style={{"fontSize":"17px","padding":"18px 44px"}}>Register Now &rarr;</a>
     </div>
-    <div className="reveal" style={{"marginTop":"48px"}}>
-      <p style={{"fontSize":"14px","color":"var(--brand-muted)","marginBottom":"16px"}}>Not ready to register? Stay in the loop.</p>
-      <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-        <input type="email" placeholder="Enter your email" required={true} />
-        <button type="submit">Subscribe</button>
-      </form>
-      <p className="newsletter-note">Speaker announcements, early-bird access, and summit updates.</p>
-    </div>
+  </div>
+</section>
+
+{/*  ========== 11. SIGN UP ==========  */}
+<section className="signup-section" id="signup-updates">
+  <div className="signup-inner reveal">
+    <h3 className="signup-title">Sign up for updates</h3>
+    <p className="signup-sub">Get speaker announcements, agenda updates, and ticket release alerts.</p>
+    <form className="signup-form" onSubmit={(e) => e.preventDefault()}>
+      <input type="email" placeholder="Enter your email" required={true} />
+      <input type="text" placeholder="Enter your first name" required={true} />
+      <input type="text" placeholder="Enter your last name" required={true} />
+      <button type="submit">Sign Up</button>
+    </form>
   </div>
 </section>
 
